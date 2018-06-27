@@ -1,0 +1,292 @@
+\documentclass[12pt]{report}
+
+%%%%% PACKAGES %%%%%
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage[
+	separate-uncertainty = true,
+	multi-part-units = repeat
+]{siunitx}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[font=scriptsize]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+%%%%% CONFIGURATION %%%%%
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge}
+\parindent=1em
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+\lstset{
+	language=JavaScript,
+	backgroundcolor=\color{white},
+	extendedchars=true,
+	basicstyle=\footnotesize\ttfamily,
+	showstringspaces=false,
+	showspaces=false,
+	numbers=left,
+	numberstyle=\footnotesize,
+	numbersep=9pt,
+	tabsize=2,
+	breaklines=true,
+	showtabs=false,
+	captionpos=b
+}
+\newtheorem{theorem}{Twierdzenie}
+\newtheorem{definition}{Definicja}
+\newcommand{\R}{\mathbb{R}}
+
+%%%%% DOCUMENT START %%%%%
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+	\large 
+	Uniwersytet Jagielloński\\
+	Wydział Matematyki i Informatyki\\
+	kierunek: matematyka komputerowa
+	
+	\vspace{5.0cm}
+	\huge
+	Układ Lorenza
+	
+	\vspace{1.0cm}
+	\large
+	Oleksandr Malakhov
+	\end{center}
+	
+	\vspace{3.0cm}
+	\begin{flushright}
+	promotor: dr Tomasz Kapela
+	\end{flushright}
+	
+	\vspace{4.0cm}
+	\begin{center}
+		\footnotesize
+		Kraków 2018
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Wstęp}
+	\hspace{\parindent} Celem tej pracy było zapoznanie się z układem Lorenza i jego właściwościami, oraz napisanie programu dla wizualizacji atraktora Lorenza i jego wykorzystanie dla demonstracji wspomnianych powyżej własności.
+
+	\section{Historia}
+	\hspace{\parindent} Układ Lorenza, bez wątpliwości najlepiej znany z wszystkich chaotycznych równań różniczkowych, był sformułowany w 1963 roku Edwardem Lorenzem jako bardzo uproszczony model konwekcji atmosferycznej. Lorenz rozważał dwuwymiarową płynną komórkę, która była podgrzewana od dołu i chłodzona od góry. Ruch płynu może być opisany układem równań różniczkowych zawierającym nieskończenie wiele zmiennych. Lorenz zrobił ogromne uproszczające założenie że wszystkie zmienne oprócz trzech będą stałe. Te zmienne mierzą konwekcyjne "przewrócenie" (\textit{x}), oraz poziomową i pionową wariację temperatury (\textit{y} i \textit{z}). Wynikowy ruch  prowadził do trójwymiarowego układu równań różniczkowych z trzema parametrami: liczbą Prandtl'a $\sigma$, liczbą Rayleigh'a \textit{r} oraz parametrem \textit{b}, odnoszącym się do fizycznego rozmiaru systemu:
+		\[ x' = \sigma(y - x) \]
+		\[ y' = rx - y - xz \]
+		\[ z' = xy - bz \]
+	\hspace{\parindent} Układ ten posiada to co stało się znane jako "dziwny atraktor". Przed tym jak model Lorenza zaczął trafiać na pierwsze strony, jedynymi typami atraktorów stabilnych znanymi na ten czas byli równowaga i orbity zamknięte. Układ Lorenza otworzył nowe horyzonty we wszystkich dziedzinach nauki i inżynierii, ponieważ większość zjawisk obecnych w układzie Lorenza później były odnalezione w biologii, teorii obwodów, mechanice itd. \cite{HSD}
+
+\chapter{Układ Lorenza}
+	\hspace{\parindent} Jak dowiedzieliśmy wcześniej układem Lorenza nazywamy układ trzech równań różniczkowych:
+		\[ x' = \sigma(y - x) \]
+		\[ y' = rx - y - xz \]
+		\[ z' = xy - bz \]
+	Zakładamy że wszystkie parametry są dodatnie oraz $\sigma > b + 1$. Klasyczne wartości tych parametrów, które doprowadziły do odkrycia Lorenza to $\sigma = 10, b = 8/3, r = 28$. \cite{L}
+
+	\section{Właściwości}
+	\hspace{\parindent} Układ Lorenza ma trzy punkty równowagi - początek oraz
+		\[ Q_{\pm} = (\pm \sqrt{b(r-1)}, \pm \sqrt{b(r-1)}, r-1) \]
+	Ostatnie dwa istnieją oczywiście tylko gdy $r > 1$. Przy $r < 1$ punktem równowagi jest tylko początek, a przy $r = 1$ mamy bifurkację widelcową \footnote{Bifurkacja - zjawisko skokowej zmiany własności modelu matematycznego przy drobnej zmianie jego parametrów. W danym przypadku mamy przejście pomiędzy jednym punktem równowagi a trzema.}.
+	
+	\hspace{\parindent} Pole wektorowe Lorenza $\mathcal{L}(X)$ jest symetryczne. Założymy że $S(x, y, z) = (-x, -y, z)$, wtedy mamy $S(\mathcal{L}(X)) = \mathcal{L}(S(X))$. Tzn. że odbicie przez oś $z$ zachowuje pole. W szczególności jeśli $(x(t), y(t), z(t))$ jest rozwiązaniem układu Lorenza, to $(-x(t), -y(t), z(t))$ również jest jego rozwiązaniem.
+	
+	\hspace{\parindent} Niech $V(x, y, z) = rx^2 + \sigma y^2 + \sigma (z-2r)^2$. Zauważmy że $V(x, y, z) = v > 0$ definiuje elipsoid w $\R ^3$ z środkiem w $(0, 0, 2r)$.
+	\begin{theorem}
+		Istnieje $v*$ takie że każde rozwiązanie, które zaczyna się poza elipsoidom $V = v*$ w końcu wchodzi w ten elipsoid i zostaje wewnątrz niego.
+	\end{theorem}
+	\begin{proof}
+		Obliczamy
+			\[ \dot{V} = -2 \sigma (rx^2 + y^2 + b(z^2 - 2rz)) = -2 \sigma (rx^2 + y^2 + b(z - r)^2 - br^2) \]
+		Równanie
+			\[ rx^2 + y^2 + b(z - r)^2 = \mu \]
+		również definiuje elipsoid gdy $\mu > 0$. Jeśli $\mu > br^2$ mamy $\dot{V} < 0$. Zatem możemy wybrać wystarczająco duże $v*$ takie że elipsoid $V = v*$ ściśle zawiera elipsoid
+			\[ rx^2 + y^2 + b(z - r)^2 = br^2 \]
+		Wtedy $\dot{V} < 0$ dla wszystkich $v >= v*$.
+	\end{proof}
+
+	\section{Atraktor Lorenza}
+	\hspace{\parindent} Niech $\phi _t (X_0)$ oznacza rozwiązanie spełniające zagadnienie początkowe $X_0$, tzn. $\phi _0 (X_0) = X_0$. Funkcję $\phi (t, X_0) = \phi _t (X_0)$ nazywamy potokiem równania różniczkowego.
+	\begin{definition}
+		Niech $X' = F(X)$ będzie układem równań różniczkowych w $\R ^n$ z potokiem $\phi _t$. Zbiór $\Lambda$ nazywa się atraktorem jeśli:
+		\begin{itemize}
+			\item $\Lambda$ zwarty i niezmienny
+			\item istnieje otwarty zbiór $U$ zawierający $\Lambda$ taki że dla każdego $X \in U$, $\phi _t (X) \in U$ dla wszystkich $t >= 0$ oraz $\cap _{t>=0} \phi _t (U) = \Lambda$
+			\item (tranzytywność) dla danych punktów $Y_1, Y_2 \in \Lambda$ i dowolnych otoczeń $U_j$ około $Y_j$ w $U$, istnieje krzywa rozwiązania, która zaczyna się w $U_1$ i później przechodzi przez $U_2$
+		\end{itemize}
+	\end{definition}
+
+	\section{Chaos w układzie Lorenza}
+	\begin{definition}
+		Odwzorowaniem Poincare nazywamy przecięcie orbit periodycznych w przestrzeni stanów ciągłego układu dynamicznego z podprzestrzenią niższego wymiaru, nazywaną przekrojem Poincare, poprzeczne potoku układu.
+	\end{definition}
+	\begin{definition}
+		Niech $(X, \rho _x), (Y, \rho _y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
+			\[ \rho _y (f(x_1), f(x_2)) <= L \dot \rho _x (x_1, x_2) \]
+	\end{definition}
+	\begin{theorem}
+		Niech
+			\[ P := \{(x, y, z) | z = 53\} \]
+		Dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(s, r, b) = (45, 54, 10)$ istnieje przekrój Poincare $N \subset P$ taki że odwzorowanie Poincare $g$ indukowane przez układ Lorenza spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje $d \in N$ i ciągła suriekcja $\rho : Inv(N, g) \ \Sigma _2$ taka że
+			\[ \rho \circ g^d = \sigma \circ \rho \]
+		gdzie $\sigma : \Sigma _2 \to \Sigma _2$ jest przesunięciem dynamicznym na dwóch symbolach. \cite{MM}
+	\end{theorem}
+	\begin{theorem}
+		Rozważmy układ Lorenza z wartościami parametrów
+			\[ (\sigma, r, b) \in \{(10, 28, 8/3), (10, 60, 8/3), (10, 54, 45)\} \]
+		oraz płaszczyzną $P = \{(x, y, z) | z = r - 1\}$. Załóżmy
+			\[ A_{(10,28,8/3)} := \begin{bmatrix}
+									0 & 1 & 1 & 0 & 0 & 0 \\
+									0 & 0 & 0 & 1 & 1 & 0 \\
+									0 & 0 & 0 & 0 & 0 & 1 \\
+									1 & 0 & 0 & 0 & 0 & 0 \\
+									0 & 1 & 1 & 0 & 0 & 0 \\
+									0 & 0 & 0 & 1 & 1 & 0
+								\end{bmatrix}
+			\]
+			\[
+			   A_{(10,60,8/3)} := \begin{bmatrix}
+			   						0 & 0 & 1 & 0 \\
+			   						0 & 0 & 0 & 1 \\
+			   						1 & 1 & 0 & 0 \\
+			   						0 & 0 & 1 & 0
+			   					\end{bmatrix}
+			   A_{(10,54,45)} := \begin{bmatrix}
+			   						1 & 1 & 0 & 0 \\
+			   						0 & 0 & 1 & 1 \\
+			   						1 & 1 & 0 & 0 \\
+			   						0 & 0 & 1 & 1
+			   					\end{bmatrix}
+			\]
+		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje przekrój Poincare $N \subset P$ taki że odpowiednie odwzorowanie Poincare $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod _k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmiennym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
+			\[ \rho \circ f = T \circ \rho \]
+		Co więcej, dla każdego periodycznego $\alpha \in \sum (A)$ istnieje takie $x \in Inv(N, f)$ które leży na trajektorii periodycznej z takim samym minimalnym periodem $\rho (x) = \alpha$. \cite{MMS}
+	\end{theorem}
+
+	\begin{theorem}
+		Odwzorowanie Poincare $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
+		\begin{itemize}
+			\item $\Phi$ ma czulą zależność od warunków początkowych
+			\item punkty periodyczne $\Phi$ są gęste w $\mathcal{A}$
+			\item $\Phi$ jest tranzytywne na $\mathcal{A}$
+		\end{itemize}
+	\end{theorem}
+	Takie odwzorowanie nazywamy \textit{chaotycznym}.
+
+\chapter{Program dla wizualizacji atraktora Lorenza}
+	\hspace{\parindent} Dla demonstracji powyżej opisanych własności był napisany program dla wizualizacji atraktora Lorenza.
+	
+	\section{Technologie}
+	\hspace{\parindent} Żeby uprościć korzystanie z tego programu była podjęta decyzja zrobić go w formacie strony internetowej, ponieważ przy takim podejściu on się staje wieloplatformowy i nie wymaga od użytkownika żadnych dodatkowych działań (takich jak pobieranie bibliotek, środowisk itd.), tylko posiadania przeglądarki.
+	
+	\hspace{\parindent} Program składa się z trzech plików: \hyperref[sec:html]{index.html}, \hyperref[sec:css]{style.css} oraz \hyperref[sec:js]{lorenz-system.js}. Piersze dwa odpowiadają oczywiście za wygląd strony, w trzecim znajduje się cała logika aplikacji. Dla rozwiązania układu Lorenza była wykorzystana biblioteka "Numeric Javascript" \cite{NumJS}, która dostarcza narzędzia dla rozwiązania równań różniczkowych zwyczajnych metodą numeryczną DOPRI (Dormand-Prince). Z otrzymanych wyników potem rysuje się trójwymiarowy wykres za pomocą biblioteki "plotly.js" \cite{Ply}.
+	
+	\section{Instrukcja}
+	\hspace{\parindent} Po lewej stronie znajduję się panel konfiguracyjny, który posiada pola dla zmiany wartości parametrów $\sigma, r, b$, czasu początku i końca oraz punktu startowego rozwiązania (trzeba uważać żeby wpisywane liczby wykorzystywali znak przycinku ',' zamiast znaku kropki '.'). Poniżej znajdują się następujące przyciski:
+	\begin{itemize}
+		\item "NEW PLOT" - po kliknięciu rysuje wykres rozwiązania odpowiadającego obecnym wpisanym wartościom parametrów; jeśli jakieś wykresy już są narysowane, to zostają usunięte
+		\item "ADD PLOT" - po kliknięciu dorysowuje wykres rozwiązania odpowiadającego obecnym wartościom parametrów do narysowanych wcześniej
+		\item "START ANIMATION" - po kliknięciu na wszystkich narysowanych wykresach zaczyna się animacja ruchu punktu po krzywej rozwiązania
+		\item "REMOVE ALL" - po kliknięciu usuwa wszystkie wykresy
+	\end{itemize}
+
+	\section{Demonstracja}
+	\hspace{\parindent} Na początek upewnimy się że atraktor Lorenza całkowicie zasługuje nazwę "dziwny atraktor":
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=250px]{first_plot.png}
+		\caption{Atraktor Lorenza dla klasycznych parametrów $\sigma = 10, r = 28, b = 8/3$}
+		\label{fig:first_plot}
+	\end{figure}
+	Oraz zobaczymy że ten "motyl" rzeczywiście jest atraktorem:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=300px]{second_plot_cr.png}
+		\caption{Punkty startowe dla wykresów: $(1, 1, 1)$ dla niebieskiego, $(1, 30, 1)$ dla pomarańczowego, $(40, 30, 1)$ dla czerwonego, $(40, -30, 20)$ dla zielonego}
+		\label{fig:second_plot}
+	\end{figure}
+	Sprawdzimy czułą zależność od warunków początkowych:
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.4\linewidth}
+			\includegraphics[width=\linewidth]{third_plot_start.png}
+			\caption{Na początek punkty są tak blisko że nakładają się na siebie}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\linewidth}
+			\includegraphics[width=\linewidth]{third_plot_after_time.png}
+			\caption{Po jakimś czasie punkty kompletnie rozchodzą się}
+		\end{subfigure}
+		\caption{Punkt początkowy dla niebieskiego wykresu $(1, 0, 0)$, dla pomarańczowego $(1.01, 0, 0)$}
+		\label{fig:third_plot}
+	\end{figure}
+	Zobaczymy że dla $r < 24.74$ układ jest stabilny i rozwija się do jednego z dwóch punktów stałych atraktora, a dla $r > 24.74$ już przyjmuje bardziej zwykły wygląd:
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.4\linewidth}
+			\includegraphics[width=\linewidth]{fourth_plot_less.png}
+			\caption{Wykres dla $r = 24$}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\linewidth}
+			\includegraphics[width=\linewidth]{fourth_plot_greater.png}
+			\caption{Wykres dla $r = 25$}
+		\end{subfigure}
+		\caption{}
+		\label{fig:fourth_plot}
+	\end{figure}
+
+\chapter{Wnioski}
+	\hspace{\parindent} Rozpatrzyliśmy mechanizm łączenia Mathematica z programami napisanymi w językach C/C++ z użyciem protokołu WSTP, polegający na napisaniu specjalnego pliku pośredniczego i generacji z niego pliku w języku C, który jest linkowany z interesującymi nas plikami w językach C/C++ i odpowiada za połączenie. Dalej już do dyspozycji jest biblioteka wielu różnych funkcji, pozwalających na różnego rodzaju komunikacje pomiędzy programami. Generalnie jest ten mechanizm logiczny, dobrze udokumentowany i funkcjonalny.
+	
+	Również popracowaliśmy z częścią biblioteki CAPD, dostarczającą narzędzia dla rozwiązania równań różniczkowych zwyczajnych, i używając tej biblioteki zaimplementowaliśmy nieścisłą metodę rozwiązania takich równań polegającą na rozwinięciu funkcji w szereg Taylora.
+	
+	Dalsza praca w tym kierunku mogłaby zawierać napisanie bardziej rozwiniętego interfejsu biblioteki CAPD-DynSys, zawierającego nowe algorytmy oraz ich implementacje dla arytmetyki przedziałowej. 
+
+\chapter{Appendix}
+	Tutaj jest umieszczony kod z plików źródłowych.
+	
+	\section{Plik \textit{index.html}}
+	\label{sec:html}
+	\lstinputlisting{./lorenz-system-visualization-js/index.html}
+	
+	\section{Plik \textit{style.css}}
+	\label{sec:css}
+	\lstinputlisting{./lorenz-system-visualization-js/style.css}
+	
+	\section{Plik \textit{lorenz-system.js}}
+	\label{sec:js}
+	\lstinputlisting{./lorenz-system-visualization-js/lorenz-system.js}
+	
+\bibliographystyle{alpha}
+\bibliography{biblio}
+
+\end{document}
