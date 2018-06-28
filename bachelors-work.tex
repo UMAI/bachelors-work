@@ -200,8 +200,33 @@
 		\item \textit{Kierunek rozszerzenia:} Zakładamy że $\Phi$ rozciąga $\Sigma_+$ oraz $\Sigma_-$ w kierunku $y$ z współczynnikiem większym od $\sqrt{2}$ tak że $g'(y) > \sqrt{2}$.
 		\item \textit{Warunek hiperboliczności:} Pomimo zwężenia i rozszerzenia zakładamy że $D\Phi$ przekształca wektory styczne do $\Sigma_{\pm}$, których nachylenie wynosi $\pm 1$, w wektory z nachyleniem $\mu > 1$.
 	\end{itemize}
+	\par Żeby znaleźć atraktor musimy ograniczyć uwagę na prostokącie $R \subset \Sigma$ zadanym przez $\lvert y \rvert \le y*$. Niech $R_{\pm} = R \cap \Sigma_{\pm}$. Łatwo sprawdzić że każde rozwiązanie zaczynające się wewnątrz $\Sigma_{\pm}$ ale zewnątrz $R$ musi ewentualnie przejść przez $R$, dlatego wystarczy rozważyć zachowanie $\Phi$ na $R$.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=320px]{frombook_3.png}
+		\caption{Odwzorowanie Poincare $\Phi$ na $R$}
+		\label{fig:frombook_3}
+	\end{figure}
+	\par Niech $\Phi^n$ oznacza $n$-tą iterację $\Phi$ i niech
+		\[ A = \bigcap\limits^{\infty}_{n=0} \bar{\Phi^n(R)} \]
+	Tutaj $\bar{U}$ oznacza domknięcie zbioru $U$. Niech $A$ będzie przecięciem atraktora dla potoku z $R$, tzn.
+		\[ \mathcal{A} = (\bigcup\limits_{t \in \R} \phi_t(A)) \cup \{(0, 0, 0)\} \]
+	Dodaliśmy początek żeby $\mathcal{A}$ było zbiorem zamkniętym. Wtedy:
+	\begin{theorem}
+		$\mathcal{A}$ jest atraktorem dla modelu układu Lorenza.
+	\end{theorem}
+	\begin{theorem}
+		Odwzorowanie Poincare $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
+		\begin{itemize}
+			\item $\Phi$ ma czulą zależność od warunków początkowych
+			\item punkty periodyczne $\Phi$ są gęste w $\mathcal{A}$
+			\item $\Phi$ jest tranzytywne na $\mathcal{A}$
+		\end{itemize}
+	\end{theorem}
+	Takie odwzorowanie nazywamy \textit{chaotycznym}.
 
-	\section{Chaos w układzie Lorenza}
+	\section{Wybrane twierdzenia}
+	Najpierw parę niezbędnych definicji.
 	\begin{definition}
 		Odwzorowaniem Poincare nazywamy przecięcie orbit periodycznych w przestrzeni stanów ciągłego układu dynamicznego z podprzestrzenią niższego wymiaru, nazywaną przekrojem Poincare, poprzeczne potoku układu.
 	\end{definition}
@@ -209,6 +234,7 @@
 		Niech $(X, \rho_x), (Y, \rho_y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
 			\[ \rho_y(f(x_1), f(x_2)) \le L \times \rho_x(x_1, x_2) \]
 	\end{definition}
+	Teraz możemy przedstawić dwa ważnych twierdzenia, dotyczących chaosu w układzie Lorenza:
 	\begin{theorem}
 		Niech
 			\[ P := \{(x, y, z) | z = 53\} \]
@@ -243,20 +269,10 @@
 			   						0 & 0 & 1 & 1
 			   					\end{bmatrix}
 			\]
-		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje przekrój Poincare $N \subset P$ taki że odpowiednie odwzorowanie Poincare $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod_k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmiennym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
+		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje przekrój Poincare $N \subset P$ taki że odpowiednie odwzorowanie Poincare $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod_k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmienniczym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
 			\[ \rho \circ f = T \circ \rho \]
 		Co więcej, dla każdego periodycznego $\alpha \in \sum (A)$ istnieje takie $x \in Inv(N, f)$ które leży na trajektorii periodycznej z takim samym minimalnym periodem $\rho(x) = \alpha$. \cite{MMS}
 	\end{theorem}
-
-	\begin{theorem}
-		Odwzorowanie Poincare $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
-		\begin{itemize}
-			\item $\Phi$ ma czulą zależność od warunków początkowych
-			\item punkty periodyczne $\Phi$ są gęste w $\mathcal{A}$
-			\item $\Phi$ jest tranzytywne na $\mathcal{A}$
-		\end{itemize}
-	\end{theorem}
-	Takie odwzorowanie nazywamy \textit{chaotycznym}.
 
 \chapter{Program dla wizualizacji atraktora Lorenza}
 	\par Dla demonstracji powyżej opisanych własności był napisany program dla wizualizacji atraktora Lorenza.
