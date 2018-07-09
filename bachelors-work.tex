@@ -276,23 +276,25 @@
 	\par Uproszczając można powiedzieć że oba te twierdzenia dowodzą tak naprawdę, że w atraktorze Lorenza (przy wybranych parametrach) istnieją punkty które są tak chaotyczne jak pewien ciąg symboli, dwóch w pierwszym twierdzeniu oraz 6 (dla $(10, 28, 8/3)$) lub 4 (dla $(10, 60, 8/3)$ i $(10, 54, 45)$) z odpowiednimi macierzami przejścia w drugim. Pierwsze twierdzenie jest jeszcze na tyle ważne że wniosło znaczący wkład w dziedzinę komputerowo wspieranych dowodów.
 
 \chapter{Program dla wizualizacji atraktora Lorenza}
-	\par Dla demonstracji powyżej opisanych własności był napisany program dla wizualizacji atraktora Lorenza.
+	\par Dla demonstracji powyżej opisanych własności układu Lorenza napisano program dla wizualizacji atraktora Lorenza.
 	
 	\section{Technologie}
-	\par Żeby uprościć korzystanie z tego programu była podjęta decyzja zrobić go w formacie strony internetowej, ponieważ przy takim podejściu on się staje wieloplatformowy i nie wymaga od użytkownika żadnych dodatkowych działań (takich jak pobieranie bibliotek, środowisk itd.), tylko posiadania przeglądarki.
+	\par W celu uproszczenia korzystania z programu zaimplementowano go w formie strony internetowej, ponieważ przy takim podejściu  jest on wieloplatformowy i nie wymaga od użytkownika żadnych dodatkowych działań (takich jak pobieranie bibliotek, środowisk itd.), wystarczy posiadanie przeglądarki.
 	
-	\par Program składa się z trzech plików: \hyperref[sec:html]{index.html}, \hyperref[sec:css]{style.css} oraz \hyperref[sec:js]{lorenz-system.js}. Piersze dwa odpowiadają oczywiście za wygląd strony, w trzecim znajduje się cała logika aplikacji. Dla rozwiązania układu Lorenza była wykorzystana biblioteka "Numeric Javascript" \cite{NumJS}, która dostarcza narzędzia dla rozwiązania równań różniczkowych zwyczajnych metodą numeryczną DOPRI (Dormand-Prince). Z otrzymanych wyników potem rysuje się trójwymiarowy wykres za pomocą biblioteki "plotly.js" \cite{Ply}.
+	\par Program składa się z trzech plików: \hyperref[sec:html]{index.html}, \hyperref[sec:css]{style.css} oraz \hyperref[sec:js]{lorenz-system.js}. Piersze dwa odpowiadają za wygląd strony, w trzecim znajduje się cała logika aplikacji. Dla rozwiązania układu Lorenza wykorzystano bibliotekę "Numeric Javascript" \cite{NumJS}, która dostarcza narzędzia dla rozwiązania równań różniczkowych zwyczajnych metodą numeryczną DOPRI (Dormand-Prince). Z otrzymanych wyników zostaje potem narysowany trójwymiarowy wykres za pomocą biblioteki "plotly.js" \cite{Plotly}.
 	
 	\section{Instrukcja}
-	\par Po lewej stronie znajduję się panel konfiguracyjny, który posiada pola dla zmiany wartości parametrów $\sigma, r, b$, czasu początku i końca oraz punktu startowego rozwiązania (trzeba uważać żeby wpisywane liczby wykorzystywali znak przycinku ',' zamiast znaku kropki '.'). Poniżej znajdują się następujące przyciski:
+	\par Po lewej stronie znajduję się panel konfiguracyjny, który posiada pola dla zmiany wartości parametrów $\sigma, r, b$, czasu początku i końca oraz punktu startowego rozwiązania. Poniżej znajdują się następujące przyciski:
 	\begin{itemize}
-		\item "NEW PLOT" - po kliknięciu rysuje wykres rozwiązania odpowiadającego obecnym wpisanym wartościom parametrów; jeśli jakieś wykresy już są narysowane, to zostają usunięte
-		\item "ADD PLOT" - po kliknięciu dorysowuje wykres rozwiązania odpowiadającego obecnym wartościom parametrów do narysowanych wcześniej
+		\item "NEW PLOT" - po kliknięciu rysuje wykres rozwiązania odpowiadającego obecnie wpisanym wartościom parametrów; jeśli jakieś wykresy już są narysowane, to zostają usunięte
+		\item "ADD PLOT" - po kliknięciu dodaje wykres rozwiązania odpowiadającego obecnym wartościom parametrów do narysowanych wcześniej wykresów
 		\item "START ANIMATION" - po kliknięciu na wszystkich narysowanych wykresach zaczyna się animacja ruchu punktu po krzywej rozwiązania
+		\item "STOP ANIMATION" - po kliknięciu zatrzymuje animację ruchu wszystkich punktów
+		\item "RESTART" - po kliknięciu zaczyna animację punktów od początku 
 		\item "REMOVE ALL" - po kliknięciu usuwa wszystkie wykresy
 	\end{itemize}
 
-	\section{Demonstracja}
+	\section{Demonstracja możliwości programu}
 	\par Na początek upewnimy się że atraktor Lorenza całkowicie zasługuje nazwę "dziwny atraktor":
 	\begin{figure}[H]
 		\centering
