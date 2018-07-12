@@ -111,6 +111,29 @@
 		\[ z' = xy - bz \]
 
 	\par Układ ten posiada to co stało się znane jako "dziwny atraktor". Przed tym jak model Lorenza zyskał sławę, jedynymi znanymi typami atraktorów stabilnych były punkty równowagi i orbity zamknięte. Układ Lorenza otworzył nowe horyzonty we wszystkich dziedzinach nauki i inżynierii, ponieważ większość zjawisk obecnych w układzie Lorenza później zostały odnalezione w biologii, teorii obwodów, mechanice itd. \cite{HSD}
+	
+	\section{Podstawowe definicje}
+	\begin{definition}
+		Bifurkacja - zjawisko skokowej zmiany własności modelu matematycznego przy drobnej zmianie jego parametrów.
+	\end{definition}
+	\begin{definition}
+		Niech $\phi_t (X_0)$ oznacza rozwiązanie spełniające zagadnienie początkowe $X_0$, tzn. $\phi_0 (X_0) = X_0$. Funkcję $\phi(t, X_0) = \phi_t(X_0)$ nazywamy potokiem równania różniczkowego.
+	\end{definition}
+	\begin{definition}
+		Niech $X' = F(X)$ będzie układem równań różniczkowych w $\R^n$ z potokiem $\phi_t$. Zbiór $\Lambda$ nazywa się atraktorem jeśli:
+		\begin{itemize}
+			\item $\Lambda$ zwarty i niezmienniczy
+			\item istnieje otwarty zbiór $U$ zawierający $\Lambda$ taki że dla każdego $X \in U$, $\phi_t(X) \in U$ dla wszystkich $t \ge 0$ oraz $\cap_{t \ge 0} \phi_t(U) = \Lambda$
+			\item (tranzytywność) dla danych punktów $Y_1, Y_2 \in \Lambda$ i dowolnych otoczeń $U_j$ około $Y_j$ w $U$, istnieje krzywa rozwiązania, która zaczyna się w $U_1$ i później przechodzi przez $U_2$
+		\end{itemize}
+	\end{definition}
+	\begin{definition}
+		Odwzorowaniem Poincare nazywamy przecięcie orbit periodycznych w przestrzeni stanów ciągłego układu dynamicznego z podprzestrzenią niższego wymiaru, nazywaną przekrojem Poincare, poprzeczne potoku układu.
+	\end{definition}
+	\begin{definition}
+		Niech $(X, \rho_x), (Y, \rho_y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
+		\[ \rho_y(f(x_1), f(x_2)) \le L \times \rho_x(x_1, x_2) \]
+	\end{definition}
 
 \chapter{Układ Lorenza}
 	\par Jak zostało napisane wcześniej układem Lorenza nazywamy układ trzech równań różniczkowych:
@@ -123,9 +146,6 @@
 	\par Układ Lorenza ma trzy punkty równowagi: początek układu współrzędnych oraz
 		\[ Q_{\pm} = (\pm \sqrt{b(r - 1)}, \pm \sqrt{b(r - 1)}, r - 1) \]
 	Ostatnie dwa istnieją oczywiście tylko gdy $r > 1$. Przy $r < 1$ punktem równowagi jest tylko początek, a przy $r = 1$ mamy bifurkację pitchfork. W danym przypadku mamy przejście pomiędzy jednym punktem równowagi a trzema.
-	\begin{definition}
-		Bifurkacja - zjawisko skokowej zmiany własności modelu matematycznego przy drobnej zmianie jego parametrów.
-	\end{definition}
 	
 	\par Po linearyzacji otrzymujemy układ
 		\[ Y' = \begin{bmatrix}
@@ -158,91 +178,72 @@
 		Wtedy $\dot{V} < 0$ dla wszystkich $v \ge v*$.
 	\end{proof}
 
-	\section{Atraktor Lorenza}
-	\par Niech $\phi_t (X_0)$ oznacza rozwiązanie spełniające zagadnienie początkowe $X_0$, tzn. $\phi_0 (X_0) = X_0$. Funkcję $\phi(t, X_0) = \phi_t(X_0)$ nazywamy potokiem równania różniczkowego.
-	\begin{definition}
-		Niech $X' = F(X)$ będzie układem równań różniczkowych w $\R^n$ z potokiem $\phi_t$. Zbiór $\Lambda$ nazywa się atraktorem jeśli:
-		\begin{itemize}
-			\item $\Lambda$ zwarty i niezmienniczy
-			\item istnieje otwarty zbiór $U$ zawierający $\Lambda$ taki że dla każdego $X \in U$, $\phi_t(X) \in U$ dla wszystkich $t \ge 0$ oraz $\cap_{t \ge 0} \phi_t(U) = \Lambda$
-			\item (tranzytywność) dla danych punktów $Y_1, Y_2 \in \Lambda$ i dowolnych otoczeń $U_j$ około $Y_j$ w $U$, istnieje krzywa rozwiązania, która zaczyna się w $U_1$ i później przechodzi przez $U_2$
-		\end{itemize}
-	\end{definition}
-
 	\section{Model dla atraktora Lorenza}
-	\par Opiszemy model dla atraktora Lorenza, zaproponowany przez Guckenheimera i Williamsa \cite{GW}, który, jak było udowodniono przez Tuckera \cite{Tucker}, rzeczywiście odpowiada układu Lorenza dla pewnych parametrów.
+	\par Opiszemy model dla atraktora Lorenza, zaproponowany przez Guckenheimera i Williamsa \cite{GW}, który, jak zostało udowodnione przez Tuckera \cite{Tucker}, rzeczywiście odpowiada układowi Lorenza dla pewnych parametrów.
 	
-	\par Założymy że nasz model jest symetryczny przez odbicie $(x, y, z) \to (-x, -y, z)$, jak i układ Lorenza. Najpierw umieścimy punkt równowagi w początku $\R^3$ i założymy że wewnątrz sześcianu $\mathcal{S}$ zadanego przez $\lvert x \rvert, \lvert y \rvert, \lvert z \rvert \le 5$ układ jest liniowy. Zamiast tego żeby wykorzystywać wartości własne $\lambda_1$ oraz $\lambda_{\pm}$ dla prawdziwego układu Lorenza, uprościmy obliczenia zakładając wartości własne równe $-1$, $2$ i $-3$. Układ wewnątrz sześcianu jest zadany przez:
+	\par Załóżmy że nasz model jest symetryczny względem odbicia $(x, y, z) \to (-x, -y, z)$, tak jak układ Lorenza. Najpierw umieścimy punkt równowagi w początku $\R^3$ i założymy że wewnątrz sześcianu $\mathcal{S}$ zadanego przez $\lvert x \rvert, \lvert y \rvert, \lvert z \rvert \le 5$ układ jest liniowy. Zamiast wykorzystywać wartości własne $\lambda_1$ oraz $\lambda_{\pm}$ dla prawdziwego układu Lorenza, uprościmy obliczenia zakładając wartości własne równe $-1$, $2$ i $-3$. Układ wewnątrz sześcianu jest zadany przez:
 		\[ x' = -3x \]
 		\[ y' = 2y \]
 		\[ z' = -z \]
 	\par My musimy wiedzieć jak rozwiązania przechodzą blisko $(0, 0, 0)$. Rozważmy prostokąt $\mathcal{R}_1$ na płaszczyźnie  $z = 1$ zadany przez $\lvert x \rvert \le 1, 0 < y \le \epsilon < 1$. Z płynem czasu wszystkie rozwiązania, które zaczynają w $\mathcal{R}_1$ ewentualnie dostają się do $\mathcal{R}_2$ na płaszczyźnie  $y = 1$ zadanego przez $\lvert x \rvert \le 1, 0 < z \le 1$. Zatem my mamy funkcję $h: \mathcal{R}_1 \to \mathcal{R}_2$ postaci
-		\[ h \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x_1 \\ z_1 \end{bmatrix} = \begin{bmatrix} y^{3/2} \\ y^{1/2} \end{bmatrix} \]
+		\[ h \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x_1 \\ z_1 \end{bmatrix} = \begin{bmatrix} xy^{3/2} \\ y^{1/2} \end{bmatrix} \]
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=220px]{frombook_1.png}
-		\caption{Rozwiązania przechodzą około $(0, 0, 0)$}
+		\caption{Rozwiązania przechodzą około $(0, 0, 0)$ \cite{HSD}}
 		\label{fig:frombook_1}
 	\end{figure}
-	\par Po analogii z układem Lorenza umieszczamy dwa dodatkowe punkty równowagi na płaszczyźnie $z = 27$, jeden w $Q_- = (-10, -20, 27)$ i drugi w $Q_+ = (10, 20, 27)$. Zakładamy że proste $y = \pm 20, z = 27$ tworzą odcinki prostych stabilnych w $Q_{\pm}$ oraz że dwie inne wartości własne w tych punktach są zespolone z dodatnią częścią rzeczywistą.
+	\par Po analogii z układem Lorenza umieszczamy dwa dodatkowe punkty równowagi na płaszczyźnie $z = 27$, jeden w $Q_- = (-10, -20, 27)$ i drugi w $Q_+ = (10, 20, 27)$. Zakładamy że proste $y = \pm 20, z = 27$ odpowiadają kierunkom stabilnym w $Q_{\pm}$ oraz że dwie inne wartości własne w tych punktach są zespolone z dodatnią częścią rzeczywistą.
 	\par Niech $\Sigma$ oznacza kwadrat $\lvert x \rvert, \lvert y \rvert \le 20, z = 27$. Zakładamy że pole wektorowe wskazuje w dół wewnątrz tego kwadratu. Zatem rozwiązania spiralnie oddalają się od $Q_{\pm}$ jak w układzie Lorenza.
-	\par Niech $\zeta^{\pm}$ oznacza dwie gałęzie niestabilnej krzywej w początku. Zakładamy że te krzywe obchodzą $\Sigma$ i wchodzą w kwadrat jak na rysunku:
+	\par Niech $\zeta^{\pm}$ oznacza dwie gałęzie niestabilnej rozmaitości w początku układu współrzędnych. Zakładamy że te krzywe obchodzą $\Sigma$ i wchodzą w kwadrat jak na rysunku:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=320px]{frombook_2.png}
-		\caption{Rozwiązania $\zeta^{\pm}$ oraz ich przecięcie z $\Sigma$ w modeli dla atraktora Lorenza}
+		\caption{Rozwiązania $\zeta^{\pm}$ oraz ich przecięcie z $\Sigma$ w modeli dla atraktora Lorenza \cite{HSD}}
 		\label{fig:frombook_2}
 	\end{figure}
-	\par Rozważmy teraz prostą $y = \nu$ w $\Sigma$. Jeśli $\nu = 0$, to wszystkie rozwiązania które zaczynają się w punktach na tej prostej dążą do początku z tokiem czasu. Zatem te rozwiązania nigdy nie wracają do $\Sigma$. Zakładamy że wszystkie pozostałe rozwiązania które zaczynają się w $\Sigma$ wracają do $\Sigma$. Sposób w jaki te rozwiązania wracają prowadzi nas do głównych założeń dotyczących tego modelu:
+	\par Rozważmy teraz prostą $y = \nu$ w $\Sigma$. Jeśli $\nu = 0$, to wszystkie rozwiązania które zaczynają się w punktach na tej prostej dążą do początku układu współrzędnych z biegiem czasu. Zatem te rozwiązania nigdy nie wracają do $\Sigma$. Zakładamy że wszystkie pozostałe rozwiązania które zaczynają się w $\Sigma$ wracają do $\Sigma$. Sposób w jaki te rozwiązania wracają prowadzi nas do głównych założeń dotyczących tego modelu:
 	\begin{itemize}
-		\item \textit{Warunek powrotu:} Niech $\Sigma_+ = \Sigma \cap \{y > 0\}$ oraz $\Sigma_- = \Sigma \cap \{y < 0\}$. Zakładamy że rozwiązania przechodzące przez dowolny punkt $\Sigma_{\pm}$ wracają do $\Sigma$. Stąd my mamy odwzorowanie Poincare $\Phi: \Sigma_+ \cup \Sigma_- \to \Sigma$.
-		\item \textit{Kierunek zwężenia:} Dla każdego $\nu \ne 0$ zakładamy że odwzorowanie $\Phi$ przekształca prostą $y = \nu$ z $\Sigma$ w $y = g(\nu)$ dla jakiejś funkcji $g$. Ponadto my zakładamy że $\Phi$ zwęża tą prostą w kierunku $x$.
+		\item \textit{Warunek powrotu:} Niech $\Sigma_+ = \Sigma \cap \{y > 0\}$ oraz $\Sigma_- = \Sigma \cap \{y < 0\}$. Zakładamy że rozwiązania przechodzące przez dowolny punkt $\Sigma_{\pm}$ wracają do $\Sigma$. Stąd mamy odwzorowanie Poincarego $\Phi: \Sigma_+ \cup \Sigma_- \to \Sigma$.
+		\item \textit{Kierunek zwężenia:} Dla każdego $\nu \ne 0$ zakładamy że odwzorowanie $\Phi$ przekształca odcinek $y = \nu$ z $\Sigma$ w odcinek $y = g(\nu)$ dla jakiejś funkcji $g$. Ponadto zakładamy że $\Phi$ zwęża ten odcinek w kierunku $x$.
 		\item \textit{Kierunek rozszerzenia:} Zakładamy że $\Phi$ rozciąga $\Sigma_+$ oraz $\Sigma_-$ w kierunku $y$ z współczynnikiem większym od $\sqrt{2}$ tak że $g'(y) > \sqrt{2}$.
 		\item \textit{Warunek hiperboliczności:} Pomimo zwężenia i rozszerzenia zakładamy że $D\Phi$ przekształca wektory styczne do $\Sigma_{\pm}$, których nachylenie wynosi $\pm 1$, w wektory z nachyleniem $\mu > 1$.
 	\end{itemize}
-	\par Żeby znaleźć atraktor musimy ograniczyć uwagę na prostokącie $R \subset \Sigma$ zadanym przez $\lvert y \rvert \le y*$. Niech $R_{\pm} = R \cap \Sigma_{\pm}$. Łatwo sprawdzić że każde rozwiązanie zaczynające się wewnątrz $\Sigma_{\pm}$ ale zewnątrz $R$ musi ewentualnie przejść przez $R$, dlatego wystarczy rozważyć zachowanie $\Phi$ na $R$.
+	\par Żeby znaleźć atraktor ograniczymy uwagę do prostokąta $R \subset \Sigma$ zadanego przez $\lvert y \rvert \le y*$. Niech $R_{\pm} = R \cap \Sigma_{\pm}$. Łatwo sprawdzić że każde rozwiązanie zaczynające się wewnątrz $\Sigma_{\pm}$ ale zewnątrz $R$ musi ewentualnie przejść przez $R$, dlatego wystarczy rozważyć zachowanie $\Phi$ na $R$.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=220px]{frombook_3.png}
-		\caption{Odwzorowanie Poincare $\Phi$ na $R$}
+		\caption{Odwzorowanie Poincare $\Phi$ na $R$ \cite{HSD}}
 		\label{fig:frombook_3}
 	\end{figure}
 	\par Niech $\Phi^n$ oznacza $n$-tą iterację $\Phi$ i niech
 		\[ A = \bigcap\limits^{\infty}_{n=0} \overline{\Phi^n(R)} \]
-	Tutaj $\overline{U}$ oznacza domknięcie zbioru $U$. Niech $A$ będzie przecięciem atraktora dla potoku z $R$, tzn.
+	Tutaj $\overline{U}$ oznacza domknięcie zbioru $U$. Zbiór $A$ będzie przecięciem atraktora dla potoku z $R$. Definiujemy:
 		\[ \mathcal{A} = (\bigcup\limits_{t \in \R} \phi_t(A)) \cup \{(0, 0, 0)\} \]
-	Dodaliśmy początek żeby $\mathcal{A}$ było zbiorem zamkniętym. Wtedy:
-	\begin{theorem}
+	Dodaliśmy początek układu współrzędnych żeby $\mathcal{A}$ było zbiorem zamkniętym. Wtedy:
+	\begin{theorem}[\cite{HSD}]
 		$\mathcal{A}$ jest atraktorem dla modelu układu Lorenza.
 	\end{theorem}
-	\begin{theorem}
-		Odwzorowanie Poincare $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
+	\begin{theorem}[\cite{HSD}]
+		Odwzorowanie Poincarego $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
 		\begin{itemize}
 			\item $\Phi$ ma czulą zależność od warunków początkowych
 			\item punkty periodyczne $\Phi$ są gęste w $\mathcal{A}$
 			\item $\Phi$ jest tranzytywne na $\mathcal{A}$
 		\end{itemize}
 	\end{theorem}
-	Takie odwzorowanie nazywamy \textit{chaotycznym}. \cite{HSD}
+	Odwzorowanie posiadające powyższe własności nazywamy \textit{chaotycznym}. \cite{HSD}
 
 	\section{Chaos}
-	Najpierw parę niezbędnych definicji.
-	\begin{definition}
-		Odwzorowaniem Poincare nazywamy przecięcie orbit periodycznych w przestrzeni stanów ciągłego układu dynamicznego z podprzestrzenią niższego wymiaru, nazywaną przekrojem Poincare, poprzeczne potoku układu.
-	\end{definition}
-	\begin{definition}
-		Niech $(X, \rho_x), (Y, \rho_y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
-			\[ \rho_y(f(x_1), f(x_2)) \le L \times \rho_x(x_1, x_2) \]
-	\end{definition}
-	Teraz możemy przedstawić dwa ważnych twierdzenia, dotyczących chaosu w układzie Lorenza.
-	\begin{theorem}
+	Teraz możemy przedstawić dwa ważne twierdzenia dotyczących chaosu w układzie Lorenza.
+	\begin{theorem}[\cite{MM}]
 		Niech
 			\[ P := \{(x, y, z) | z = 53\} \]
 		Dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(s, r, b) = (45, 54, 10)$ istnieje przekrój Poincare $N \subset P$ taki że odwzorowanie Poincare $g$ indukowane przez układ Lorenza spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje $d \in N$ i ciągła suriekcja $\rho: Inv(N, g) \to \Sigma_2$ taka że
 			\[ \rho \circ g^d = \sigma \circ \rho \]
-		gdzie $\sigma : \Sigma_2 \to \Sigma_2$ jest przesunięciem dynamicznym na dwóch symbolach. \cite{MM}
+		gdzie $\sigma : \Sigma_2 \to \Sigma_2$ jest przesunięciem dynamicznym na dwóch symbolach.
 	\end{theorem}
-	\begin{theorem}
+	\begin{theorem}[\cite{MMS}]
 		Rozważmy układ Lorenza z wartościami parametrów
 			\[ (\sigma, r, b) \in \{(10, 28, 8/3), (10, 60, 8/3), (10, 54, 45)\} \]
 		oraz płaszczyzną $P = \{(x, y, z) | z = r - 1\}$. Załóżmy
@@ -271,7 +272,7 @@
 			\]
 		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje przekrój Poincare $N \subset P$ taki że odpowiednie odwzorowanie Poincare $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod_k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmienniczym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
 			\[ \rho \circ f = T \circ \rho \]
-		Co więcej, dla każdego periodycznego $\alpha \in \sum (A)$ istnieje takie $x \in Inv(N, f)$ które leży na trajektorii periodycznej z takim samym minimalnym periodem $\rho(x) = \alpha$. \cite{MMS}
+		Co więcej, dla każdego periodycznego $\alpha \in \sum (A)$ istnieje takie $x \in Inv(N, f)$ które leży na trajektorii periodycznej z takim samym minimalnym periodem $\rho(x) = \alpha$.
 	\end{theorem}
 	\par Uproszczając można powiedzieć że oba te twierdzenia dowodzą tak naprawdę, że w atraktorze Lorenza (przy wybranych parametrach) istnieją punkty które są tak chaotyczne jak pewien ciąg symboli, dwóch w pierwszym twierdzeniu oraz 6 (dla $(10, 28, 8/3)$) lub 4 (dla $(10, 60, 8/3)$ i $(10, 54, 45)$) z odpowiednimi macierzami przejścia w drugim. Pierwsze twierdzenie jest jeszcze na tyle ważne że wniosło znaczący wkład w dziedzinę komputerowo wspieranych dowodów.
 
@@ -288,55 +289,58 @@
 	\begin{itemize}
 		\item "NEW PLOT" - po kliknięciu rysuje wykres rozwiązania odpowiadającego obecnie wpisanym wartościom parametrów; jeśli jakieś wykresy już są narysowane, to zostają usunięte
 		\item "ADD PLOT" - po kliknięciu dodaje wykres rozwiązania odpowiadającego obecnym wartościom parametrów do narysowanych wcześniej wykresów
-		\item "START ANIMATION" - po kliknięciu na wszystkich narysowanych wykresach zaczyna się animacja ruchu punktu po krzywej rozwiązania
+		\item "START ANIMATION" - po kliknięciu na wszystkich narysowanych wykresach zaczyna się animacja ruchu punktu po krzywej rozwiązania; żeby punkty byli lepiej widoczne wykresy stają bardziej przezroczyste
 		\item "STOP ANIMATION" - po kliknięciu zatrzymuje animację ruchu wszystkich punktów
 		\item "RESTART" - po kliknięciu zaczyna animację punktów od początku 
 		\item "REMOVE ALL" - po kliknięciu usuwa wszystkie wykresy
 	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{interface.png}
+		\caption{Wygląd aplikacji}
+		\label{fig:interface}
+	\end{figure}
 
 	\section{Demonstracja możliwości programu}
-	\par Na początek upewnimy się że atraktor Lorenza całkowicie zasługuje nazwę "dziwny atraktor":
+	\par Dla klasycznych parametrów $\sigma = 10, r = 28, b = 8/3$ otrzymujemy dobrze znany obrazek atraktora Lorenza:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=250px]{first_plot.png}
-		\caption{Atraktor Lorenza dla klasycznych parametrów $\sigma = 10, r = 28, b = 8/3$}
-		\label{fig:first_plot}
+		\includegraphics[width=250px]{attractor.png}
+		\caption{Atraktor Lorenza dla klasycznych parametrów $\sigma = 10, r = 28, b = 8/3$, punktu startowego $(1, 0, 0)$ oraz odcinku czasu $[0, 100]$}
+		\label{fig:attractor}
 	\end{figure}
-	Oraz zobaczymy że ten "motyl" rzeczywiście jest atraktorem:
+	Zobaczymy że ten "motyl" rzeczywiście jest atraktorem. Dla tego wybierzmy kilka dowolnych punktów startowych, narysujemy wykresy dla każdego z nich w jednym układzie współrzędnych za pomocą operacji "ADD PLOT", i zobaczmy że wszystkie trajektorie po jakimś czasie zbiegają się do atraktora:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=300px]{second_plot_cr.png}
-		\caption{Punkty startowe dla wykresów: $(1, 1, 1)$ dla niebieskiego, $(1, 30, 1)$ dla pomarańczowego, $(40, 30, 1)$ dla czerwonego, $(40, -30, 20)$ dla zielonego}
-		\label{fig:second_plot}
+		\includegraphics[width=250px]{attractivity.png}
+		\caption{Punkty startowe dla wykresów: $(1, 1, 1)$ dla niebieskiego, $(1, 30, 1)$ dla czerwonego, $(40, 30, 1)$ dla zielonego, $(40, -30, 20)$ dla pomarańczowego (wartości parametrów klasyczne, odcinek czasu $[0, 100]$)}
+		\label{fig:attractivity}
 	\end{figure}
-	Sprawdzimy czułą zależność od warunków początkowych:
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}[b]{0.49\linewidth}
-			\includegraphics[width=\linewidth]{third_plot_start.png}
-			\caption{Na początek punkty są tak blisko że nakładają się na siebie}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.49\linewidth}
-			\includegraphics[width=\linewidth]{third_plot_after_time.png}
-			\caption{Po jakimś czasie punkty kompletnie rozchodzą się}
-		\end{subfigure}
-		\caption{Punkt początkowy dla niebieskiego wykresu $(1, 0, 0)$, dla pomarańczowego $(1.01, 0, 0)$}
-		\label{fig:third_plot}
-	\end{figure}
-	Zobaczymy że dla $r < 24.74$ układ jest stabilny i rozwija się do jednego z dwóch punktów stałych atraktora, a dla $r > 24.74$ już przyjmuje bardziej zwykły wygląd:
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}[b]{0.49\linewidth}
-			\includegraphics[width=\linewidth]{fourth_plot_less.png}
-			\caption{Wykres dla $r = 24$}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.49\linewidth}
-			\includegraphics[width=\linewidth]{fourth_plot_greater.png}
-			\caption{Wykres dla $r = 25$}
-		\end{subfigure}
-		\caption{}
-		\label{fig:fourth_plot}
-	\end{figure}
+
+		\subsection{Czuła zależność}
+		W celu zaobserwowania czułej zależności od warunków początkowych można wyrysować dwa rozwiązania o bardzo zbliżonych warunkach początkowych, które już po krótkim czasie wykazują zupełnie odmienne zachowanie. Efekt taki można otrzymać na przykład dla $(x_1, y_1, z_1) = (1, 1, 1)$ oraz $(x_2, y_2, z_2) = (1, 1.0001, 1)$ i parametrów $\sigma = 16, r = 45.92, b = 4$:
+		\begin{figure}[H]
+			\centering
+			\begin{subfigure}[b]{0.49\textwidth}
+				\includegraphics[width=\linewidth]{sensitive_dependence_start.png}
+				\caption{Na początek punkty są tak blisko że nakładają się na siebie}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.49\textwidth}
+				\includegraphics[width=\linewidth]{sensitive_dependence_after_time.png}
+				\caption{Po jakimś czasie punkty kompletnie rozchodzą się}
+			\end{subfigure}
+			\caption{Punkt początkowy dla niebieskiego wykresu $(1, 1, 1)$, dla pomarańczowego $(1, 1.0001, 1)$ (wartości parametrów $\sigma = 16, r = 45.92, b = 4$, odcinek czasu $[0, 100]$)}
+			\label{fig:sensitive_dependence}
+		\end{figure}
+
+		\subsection{Stabilność}
+		Zobaczymy że dla $r < 24.74$ układ jest stabilny i rozwija się do jednego z dwóch punktów stałych atraktora, a dla $r > 24.74$ już przyjmuje bardziej zwykły wygląd:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=250px]{stability.png}
+			\caption{Wykresy dla $\sigma = 10, b = 8/3$ oraz $r = 24$ (dla czerwonego) i $r = 25$ (dla niebieskiego), punktu początkowego $(1, 0, 0)$ oraz odcinku czasu $[0, 100]$}
+			\label{fig:stability}
+		\end{figure}
 
 \chapter{Wnioski}
 	\par W pracy przedstawiono układ Lorenza, niektóre jego własności, model upraszczający jego badanie, "dziwny atraktor" oraz dotknęliśmy związanego z nim tematu chaosu. Dla demonstracyjnych celów został napisany program do wizualizacji rozwiązań tego układu w formie strony internetowej.
