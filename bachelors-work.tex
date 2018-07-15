@@ -84,7 +84,8 @@
 	
 	\vspace{1.0cm}
 	\large
-	Oleksandr Malakhov
+	Oleksandr Malakhov \\
+	nr indeksu: 1130447
 	\end{center}
 	
 	\vspace{3.0cm}
@@ -92,11 +93,12 @@
 	promotor: dr Tomasz Kapela
 	\end{flushright}
 	
-	\vspace{4.0cm}
+	\vspace{3.5cm}
 	\begin{center}
 		\footnotesize
 		Kraków 2018
 	\end{center}
+	\tiny\textit{Opracowano zgodnie z Ustawą o prawie autorskim i prawach pokrewnych z dnia 4 lutego 1994 r. (Dz.U. 1994 nr 24 poz. 83) wraz z nowelizacją z dnia 25 lipca 2003 r. (Dz.U. 2003 nr 166 poz. 1610) oraz z dnia 1 kwietnia 2004 r. (Dz.U. 2004 nr 91 poz. 869)}
 \end{titlepage}
 
 \tableofcontents
@@ -117,7 +119,19 @@
 		Bifurkacja - zjawisko skokowej zmiany własności modelu matematycznego przy drobnej zmianie jego parametrów.
 	\end{definition}
 	\begin{definition}
+		Przestrzenią fazową nazywamy przestrzeń, w której zbiór wszystkich stanów układu przedstawiono tak, że każdemu możliwemu stanowi układu odpowiada jeden i tylko jeden punkt tej przestrzeni.
+	\end{definition}
+	\begin{definition}
+		Układem dynamicznym nazywamy zbiór elementów, dla którego zadano funkcjonalną zależność pomiędzy czasem a pozycją w przestrzeni fazowej każdego elementu układu.
+	\end{definition}
+	\begin{definition}
 		Niech $\phi_t (X_0)$ oznacza rozwiązanie spełniające zagadnienie początkowe $X_0$, tzn. $\phi_0 (X_0) = X_0$. Funkcję $\phi(t, X_0) = \phi_t(X_0)$ nazywamy potokiem równania różniczkowego.
+	\end{definition}
+	\begin{definition}
+		Sekcją Poincarégo nazywamy sekcję potoku $\phi$ w przestrzeni fazowej transwersalną do pola wektorowego układu dynamicznego.
+	\end{definition}
+	\begin{definition}
+		Niech mamy sekcję Poincarégo $\Sigma_1, \Sigma_2$ potoku $\phi_t$. Odwzorowaniem Poincarégo nazywamy odwzorowanie $P : \Sigma_1 \to \Sigma_2$ takie, że dla $x \in \Sigma_1$ i $y \in \Sigma_2$, gdzie $y$ jest pierwszym przecięciem trajektorii wychodzącej z $x$ z $\Sigma_2$, mamy $P(x) = y$.
 	\end{definition}
 	\begin{definition}
 		Niech $X' = F(X)$ będzie układem równań różniczkowych w $\R^n$ z potokiem $\phi_t$. Zbiór $\Lambda$ nazywa się atraktorem jeśli:
@@ -128,11 +142,8 @@
 		\end{itemize}
 	\end{definition}
 	\begin{definition}
-		Odwzorowaniem Poincare nazywamy przecięcie orbit periodycznych w przestrzeni stanów ciągłego układu dynamicznego z podprzestrzenią niższego wymiaru, nazywaną przekrojem Poincare, poprzeczne potoku układu.
-	\end{definition}
-	\begin{definition}
 		Niech $(X, \rho_x), (Y, \rho_y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
-		\[ \rho_y(f(x_1), f(x_2)) \le L \times \rho_x(x_1, x_2) \]
+		\[ \rho_y(f(x_1), f(x_2)) \le L \rho_x(x_1, x_2) \]
 	\end{definition}
 
 \chapter{Układ Lorenza}
@@ -140,7 +151,7 @@
 		\[ x' = \sigma (y - x) \]
 		\[ y' = rx - y - xz \]
 		\[ z' = xy - bz \]
-	Zakładamy o parametrach że są dodatnie oraz $\sigma > b + 1$. Klasyczne wartości tych parametrów, które doprowadziły do odkrycia Lorenza to $\sigma = 10, b = 8/3, r = 28$ \cite{Lorenz}. Przez $X$ będziemy oznaczać trójkę $(x, y, z)$.
+	Będziemy oznaczać ten układ jako $X' = \mathcal{L}(X)$. Zakładamy o parametrach że są dodatnie oraz $\sigma > b + 1$. Klasyczne wartości tych parametrów, które doprowadziły do odkrycia Lorenza to $\sigma = 10, b = 8/3, r = 28$ \cite{Lorenz}. Przez $X$ będziemy oznaczać trójkę $(x, y, z)$.
 
 	\section{Podstawowe fakty}
 	\par Układ Lorenza ma trzy punkty równowagi: początek układu współrzędnych oraz
@@ -154,29 +165,31 @@
 					y & x & -b
 				\end{bmatrix}
 		\]
-	Wartości własne dla tej macierzy w początku wynoszą $-b$ oraz
-		\[ \lambda_{\pm} = \frac{1}{2} (-(\sigma + 1) \pm \sqrt{(\sigma + 1)^2 - 4\sigma (1 - r)}) \]
-	Zauważmy że obie wartości $\lambda_{\pm}$ są ujemne kiedy $0 \le r < 1$, zatem początek jest zlewem w tym przypadku.
+	Wartości własne dla tej macierzy dla punktu $(0, 0, 0)$ wynoszą
+	\begin{center}
+		$-b$ oraz $\lambda_{\pm} = \frac{1}{2} (-(\sigma + 1) \pm \sqrt{(\sigma + 1)^2 - 4\sigma (1 - r)})$
+	\end{center}
+	Zauważmy że obie wartości $\lambda_{\pm}$ są ujemne kiedy $0 \le r < 1$, zatem początek układu współrzędnych jest zlewem w tym przypadku.
 	\begin{theorem}
 		Punkty równowagi $Q_{\pm}$ są zlewami przy
 		\[ 1 < r < r* = \sigma (\frac{\sigma + b + 3}{\sigma - b - 1}) \]
 	\end{theorem}
 	
-	\par Pole wektorowe Lorenza $\mathcal{L}(X)$ jest symetryczne. Założymy że $S(x, y, z) = (-x, -y, z)$, wtedy mamy $S(\mathcal{L}(X)) = \mathcal{L}(S(X))$. Tzn. że odbicie przez oś $z$ zachowuje pole. W szczególności jeśli $(x(t), y(t), z(t))$ jest rozwiązaniem układu Lorenza, to $(-x(t), -y(t), z(t))$ również jest jego rozwiązaniem.
+	\par Pole wektorowe Lorenza $\mathcal{L}(X)$ jest symetryczne. Dla symetrii $S(x, y, z) = (-x, -y, z)$ mamy $S(\mathcal{L}(X)) = \mathcal{L}(S(X))$. To znaczy że odbicie przez oś $z$ zachowuje pole wektorowe. W szczególności jeśli $(x(t), y(t), z(t))$ jest rozwiązaniem układu Lorenza, to $(-x(t), -y(t), z(t))$ również jest jego rozwiązaniem.
 	\\
 	\par Niech $V(x, y, z) = rx^2 + \sigma y^2 + \sigma (z - 2r)^2$. Zauważmy że $V(x, y, z) = v > 0$ definiuje elipsoid w $\R^3$ ze środkiem w $(0, 0, 2r)$.
 	\begin{theorem}
-		Istnieje $v*$ takie że każde rozwiązanie, które zaczyna się poza elipsoidom $V = v*$ w końcu wchodzi w ten elipsoid i zostaje wewnątrz niego.
+		Istnieje $v*$ takie że każde rozwiązanie, które zaczyna się poza elipsoidom $V(x, y, z) = v*$ w końcu wchodzi w ten elipsoid i zostaje wewnątrz niego.
 	\end{theorem}
-	\begin{proof}
-		Obliczamy
-			\[ \dot{V} = -2 \sigma (rx^2 + y^2 + b(z^2 - 2rz)) = -2 \sigma (rx^2 + y^2 + b(z - r)^2 - br^2) \]
-		Równanie
-			\[ rx^2 + y^2 + b(z - r)^2 = \mu \]
-		również definiuje elipsoid gdy $\mu > 0$. Jeśli $\mu > br^2$ mamy $\dot{V} < 0$. Zatem możemy wybrać wystarczająco duże $v*$ takie że elipsoid $V = v*$ ściśle zawiera elipsoid
-			\[ rx^2 + y^2 + b(z - r)^2 = br^2 \]
-		Wtedy $\dot{V} < 0$ dla wszystkich $v \ge v*$.
-	\end{proof}
+	%\begin{proof}
+	%	Obliczamy
+	%		\[ \dot{V} = -2 \sigma (rx^2 + y^2 + b(z^2 - 2rz)) = -2 \sigma (rx^2 + y^2 + b(z - r)^2 - br^2) \]
+	%	Równanie
+	%		\[ rx^2 + y^2 + b(z - r)^2 = \mu \]
+	%	również definiuje elipsoid gdy $\mu > 0$. Jeśli $\mu > br^2$ mamy $\dot{V} < 0$. Zatem możemy wybrać wystarczająco duże $v*$ takie że elipsoid $V = v*$ ściśle zawiera elipsoid
+	%		\[ rx^2 + y^2 + b(z - r)^2 = br^2 \]
+	%	Wtedy $\dot{V} < 0$ dla wszystkich $v \ge v*$.
+	%\end{proof}
 
 	\section{Model dla atraktora Lorenza}
 	\par Opiszemy model dla atraktora Lorenza, zaproponowany przez Guckenheimera i Williamsa \cite{GW}, który, jak zostało udowodnione przez Tuckera \cite{Tucker}, rzeczywiście odpowiada układowi Lorenza dla pewnych parametrów.
@@ -204,8 +217,8 @@
 	\end{figure}
 	\par Rozważmy teraz prostą $y = \nu$ w $\Sigma$. Jeśli $\nu = 0$, to wszystkie rozwiązania które zaczynają się w punktach na tej prostej dążą do początku układu współrzędnych z biegiem czasu. Zatem te rozwiązania nigdy nie wracają do $\Sigma$. Zakładamy że wszystkie pozostałe rozwiązania które zaczynają się w $\Sigma$ wracają do $\Sigma$. Sposób w jaki te rozwiązania wracają prowadzi nas do głównych założeń dotyczących tego modelu:
 	\begin{itemize}
-		\item \textit{Warunek powrotu:} Niech $\Sigma_+ = \Sigma \cap \{y > 0\}$ oraz $\Sigma_- = \Sigma \cap \{y < 0\}$. Zakładamy że rozwiązania przechodzące przez dowolny punkt $\Sigma_{\pm}$ wracają do $\Sigma$. Stąd mamy odwzorowanie Poincarego $\Phi: \Sigma_+ \cup \Sigma_- \to \Sigma$.
-		\item \textit{Kierunek zwężenia:} Dla każdego $\nu \ne 0$ zakładamy że odwzorowanie $\Phi$ przekształca odcinek $y = \nu$ z $\Sigma$ w odcinek $y = g(\nu)$ dla jakiejś funkcji $g$. Ponadto zakładamy że $\Phi$ zwęża ten odcinek w kierunku $x$.
+		\item \textit{Warunek powrotu:} Niech $\Sigma_+ = \Sigma \cap \{y > 0\}$ oraz $\Sigma_- = \Sigma \cap \{y < 0\}$. Zakładamy że rozwiązania przechodzące przez dowolny punkt $\Sigma_{\pm}$ wracają do $\Sigma$. Stąd mamy odwzorowanie Poincarégo $\Phi: \Sigma_+ \cup \Sigma_- \to \Sigma$.
+		\item \textit{Kierunek zwężenia:} Dla każdego $\nu \ne 0$ zakładamy że odwzorowanie $\Phi$ przekształca odcinek $y = \nu$ z $\Sigma$ w odcinek $y = g(\nu)$ dla jakiejś funkcji $g$. Ponadto zakładamy, że $\Phi$ zwęża ten odcinek w kierunku $x$.
 		\item \textit{Kierunek rozszerzenia:} Zakładamy że $\Phi$ rozciąga $\Sigma_+$ oraz $\Sigma_-$ w kierunku $y$ z współczynnikiem większym od $\sqrt{2}$ tak że $g'(y) > \sqrt{2}$.
 		\item \textit{Warunek hiperboliczności:} Pomimo zwężenia i rozszerzenia zakładamy że $D\Phi$ przekształca wektory styczne do $\Sigma_{\pm}$, których nachylenie wynosi $\pm 1$, w wektory z nachyleniem $\mu > 1$.
 	\end{itemize}
