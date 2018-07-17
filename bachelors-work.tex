@@ -104,7 +104,7 @@
 \tableofcontents
 
 \chapter{Wstęp}
-	\par Celem tej pracy jest zaprezentowanie podstawowych faktów o układzie Lorenza i jego właściwościach. Jako część pracy stworzone zostało oprogramowanie umożliwiające wizualizację atraktora Lorenza oraz demonstracja wspomnianych powyżej własności.
+	\par Celem tej pracy jest zaprezentowanie podstawowych faktów o układzie Lorenza i jego właściwościach. Jako część pracy stworzone zostało oprogramowanie umożliwiające wizualizację atraktora Lorenza oraz demonstrację wspomnianych powyżej własności.
 
 	\section{Historia}
 	\par Układ Lorenza, bez wątpliwości najlepiej znany z wszystkich chaotycznych równań różniczkowych, został sformułowany w 1963 roku przez Edwarda Lorenza jako bardzo uproszczony model konwekcji atmosferycznej. Lorenz rozważał dwuwymiarową płynną cząstkę, która była podgrzewana od dołu i chłodzona od góry. Ruch płynu może być opisany układem równań różniczkowych zawierającym nieskończenie wiele zmiennych. Lorenz zrobił ogromne uproszczające założenie że wszystkie zmienne oprócz trzech będą stałe. Te zmienne mierzą konwekcję (\textit{x}), oraz poziomową i pionową wariację temperatury (\textit{y} i \textit{z}). Wynikowy ruch prowadził do trójwymiarowego układu równań różniczkowych z trzema parametrami: liczbą Prandtl'a $\sigma$, liczbą Rayleigh'a \textit{r} oraz parametrem \textit{b}, odnoszącym się do fizycznego rozmiaru systemu:
@@ -145,13 +145,21 @@
 		Niech $(X, \rho_x), (Y, \rho_y)$ będą przestrzeniami metrycznymi. Odwzorowanie $f: X \to Y$ spełnia warunek Lipschitza ze stałą L, gdy dla dowolnych $x_1, x_2 \in X$ zachodzi nierówność
 		\[ \rho_y(f(x_1), f(x_2)) \le L \rho_x(x_1, x_2) \]
 	\end{definition}
+	\begin{definition}
+		Niech $\Sigma_2$ będzie przestrzenią ciągów w alfabecie ${1, 2}$, tzn.
+			\[ \Sigma_2 = \{(\omega_j)^{\infty}_{j=1}\, |\, \forall j \quad w_j \in {1, 2}\} \]
+		Przesunięciem dynamicznym na dwóch symbolach nazywamy $\sigma : \Sigma_2 \to \Sigma_2$ takie że $(\sigma(\omega))_j = \omega_{j+1}$.
+	\end{definition}
+	\begin{definition}
+		Zbiorem niezmienniczym układu dynamicznego $(X, f)$ nazywamy każdy taki zbiór $N \subset X$, że $f(N) \subset N$.
+	\end{definition}
 
 \chapter{Układ Lorenza}
 	\par Jak zostało napisane wcześniej układem Lorenza nazywamy układ trzech równań różniczkowych:
 		\[ x' = \sigma (y - x) \]
 		\[ y' = rx - y - xz \]
 		\[ z' = xy - bz \]
-	Będziemy oznaczać ten układ jako $X' = \mathcal{L}(X)$. Zakładamy o parametrach że są dodatnie oraz $\sigma > b + 1$. Klasyczne wartości tych parametrów, które doprowadziły do odkrycia Lorenza to $\sigma = 10, b = 8/3, r = 28$ \cite{Lorenz}. Przez $X$ będziemy oznaczać trójkę $(x, y, z)$.
+	Będziemy oznaczać ten układ jako $X' = \mathcal{L}(X)$, gdzie $X$ oznacza trójkę $(x, y, z)$. Zakładamy o parametrach że są dodatnie oraz $\sigma > b + 1$. Klasyczne wartości tych parametrów, które doprowadziły do odkrycia Lorenza to $\sigma = 10, b = 8/3, r = 28$ \cite{Lorenz}.
 
 	\section{Podstawowe fakty}
 	\par Układ Lorenza ma trzy punkty równowagi: początek układu współrzędnych oraz
@@ -179,7 +187,7 @@
 	\\
 	\par Niech $V(x, y, z) = rx^2 + \sigma y^2 + \sigma (z - 2r)^2$. Zauważmy że $V(x, y, z) = v > 0$ definiuje elipsoid w $\R^3$ ze środkiem w $(0, 0, 2r)$.
 	\begin{theorem}
-		Istnieje $v*$ takie że każde rozwiązanie, które zaczyna się poza elipsoidom $V(x, y, z) = v*$ w końcu wchodzi w ten elipsoid i zostaje wewnątrz niego.
+		Istnieje $v^*$ takie że każde rozwiązanie, które zaczyna się poza elipsoidom $V(x, y, z) = v^*$ w końcu wchodzi w ten elipsoid i zostaje wewnątrz niego.
 	\end{theorem}
 	%\begin{proof}
 	%	Obliczamy
@@ -215,6 +223,7 @@
 		\caption{Rozwiązania $\zeta^{\pm}$ oraz ich przecięcie z $\Sigma$ w modeli dla atraktora Lorenza \cite{HSD}}
 		\label{fig:frombook_2}
 	\end{figure}
+	Pierwszy punkt przecięcia $\zeta^{\pm}$ z $\Sigma$ oznaczamy przez $\rho^{\pm} = (\pm x, \pm y)$.
 	\par Rozważmy teraz prostą $y = \nu$ w $\Sigma$. Jeśli $\nu = 0$, to wszystkie rozwiązania które zaczynają się w punktach na tej prostej dążą do początku układu współrzędnych z biegiem czasu. Zatem te rozwiązania nigdy nie wracają do $\Sigma$. Zakładamy że wszystkie pozostałe rozwiązania które zaczynają się w $\Sigma$ wracają do $\Sigma$. Sposób w jaki te rozwiązania wracają prowadzi nas do głównych założeń dotyczących tego modelu:
 	\begin{itemize}
 		\item \textit{Warunek powrotu:} Niech $\Sigma_+ = \Sigma \cap \{y > 0\}$ oraz $\Sigma_- = \Sigma \cap \{y < 0\}$. Zakładamy że rozwiązania przechodzące przez dowolny punkt $\Sigma_{\pm}$ wracają do $\Sigma$. Stąd mamy odwzorowanie Poincarégo $\Phi: \Sigma_+ \cup \Sigma_- \to \Sigma$.
@@ -222,11 +231,15 @@
 		\item \textit{Kierunek rozszerzenia:} Zakładamy że $\Phi$ rozciąga $\Sigma_+$ oraz $\Sigma_-$ w kierunku $y$ z współczynnikiem większym od $\sqrt{2}$ tak że $g'(y) > \sqrt{2}$.
 		\item \textit{Warunek hiperboliczności:} Pomimo zwężenia i rozszerzenia zakładamy że $D\Phi$ przekształca wektory styczne do $\Sigma_{\pm}$, których nachylenie wynosi $\pm 1$, w wektory z nachyleniem $\mu > 1$.
 	\end{itemize}
-	\par Żeby znaleźć atraktor ograniczymy uwagę do prostokąta $R \subset \Sigma$ zadanego przez $\lvert y \rvert \le y*$. Niech $R_{\pm} = R \cap \Sigma_{\pm}$. Łatwo sprawdzić że każde rozwiązanie zaczynające się wewnątrz $\Sigma_{\pm}$ ale zewnątrz $R$ musi ewentualnie przejść przez $R$, dlatego wystarczy rozważyć zachowanie $\Phi$ na $R$.
+	\par Założenia implikują że odwzorowanie $\Phi$ jest postaci
+		\[ \Phi(x, y) = (f(x, y), g(y)) \]
+	gdzie $g'(y) > \sqrt{2}$ oraz $0 < {\partial f}/{\partial x} < c < 1$. Warunek hiperboliczności implikuje że
+		\[ g'(y) > \mu \left| \frac{\partial f}{\partial x} \pm \frac{\partial f}{\partial y} \right| \]
+	Żeby znaleźć atraktor ograniczymy uwagę do prostokąta $R \subset \Sigma$ zadanego przez $\lvert y \rvert \le y*$. Niech $R_{\pm} = R \cap \Sigma_{\pm}$. Łatwo sprawdzić że każde rozwiązanie zaczynające się wewnątrz $\Sigma_{\pm}$ ale zewnątrz $R$ musi ewentualnie przejść przez $R$, dlatego wystarczy rozważyć zachowanie $\Phi$ na $R$.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=220px]{frombook_3.png}
-		\caption{Odwzorowanie Poincare $\Phi$ na $R$ \cite{HSD}}
+		\caption{Odwzorowanie Poincarégo $\Phi$ na $R$ \cite{HSD}}
 		\label{fig:frombook_3}
 	\end{figure}
 	\par Niech $\Phi^n$ oznacza $n$-tą iterację $\Phi$ i niech
@@ -234,32 +247,32 @@
 	Tutaj $\overline{U}$ oznacza domknięcie zbioru $U$. Zbiór $A$ będzie przecięciem atraktora dla potoku z $R$. Definiujemy:
 		\[ \mathcal{A} = (\bigcup\limits_{t \in \R} \phi_t(A)) \cup \{(0, 0, 0)\} \]
 	Dodaliśmy początek układu współrzędnych żeby $\mathcal{A}$ było zbiorem zamkniętym. Wtedy:
-	\begin{theorem}[\cite{HSD}]
+	\begin{theorem}[\hspace{1sp}\cite{HSD}]
 		$\mathcal{A}$ jest atraktorem dla modelu układu Lorenza.
 	\end{theorem}
-	\begin{theorem}[\cite{HSD}]
-		Odwzorowanie Poincarego $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
+	\begin{theorem}[\hspace{1sp}\cite{HSD}]
+		Odwzorowanie Poincarégo $\Phi$ ograniczone do atraktora $\mathcal{A}$ dla modelu Lorenza posiada następujące własności:
 		\begin{itemize}
 			\item $\Phi$ ma czulą zależność od warunków początkowych
 			\item punkty periodyczne $\Phi$ są gęste w $\mathcal{A}$
 			\item $\Phi$ jest tranzytywne na $\mathcal{A}$
 		\end{itemize}
 	\end{theorem}
-	Odwzorowanie posiadające powyższe własności nazywamy \textit{chaotycznym}. \cite{HSD}
+	Odwzorowanie posiadające powyższe własności nazywamy \textit{chaotycznym}.
 
 	\section{Chaos}
 	Teraz możemy przedstawić dwa ważne twierdzenia dotyczących chaosu w układzie Lorenza.
-	\begin{theorem}[\cite{MM}]
+	\begin{theorem}[\hspace{1sp}\cite{MM}]
 		Niech
 			\[ P := \{(x, y, z) | z = 53\} \]
-		Dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(s, r, b) = (45, 54, 10)$ istnieje przekrój Poincare $N \subset P$ taki że odwzorowanie Poincare $g$ indukowane przez układ Lorenza spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje $d \in N$ i ciągła suriekcja $\rho: Inv(N, g) \to \Sigma_2$ taka że
+		Dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(s, r, b) = (45, 54, 10)$ istnieje sekcja Poincarégo $N \subset P$ taka, że odwzorowanie Poincarégo $g$ indukowane przez układ Lorenza spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje $d \in N$ i ciągła suriekcja $\rho: Inv(N, g) \to \Sigma_2$ taka że
 			\[ \rho \circ g^d = \sigma \circ \rho \]
 		gdzie $\sigma : \Sigma_2 \to \Sigma_2$ jest przesunięciem dynamicznym na dwóch symbolach.
 	\end{theorem}
-	\begin{theorem}[\cite{MMS}]
+	\begin{theorem}[\hspace{1sp}\cite{MMS}]
 		Rozważmy układ Lorenza z wartościami parametrów
 			\[ (\sigma, r, b) \in \{(10, 28, 8/3), (10, 60, 8/3), (10, 54, 45)\} \]
-		oraz płaszczyzną $P = \{(x, y, z) | z = r - 1\}$. Załóżmy
+		oraz płaszczyznę $P = \{(x, y, z) | z = r - 1\}$. Załóżmy
 			\[ A_{(10,28,8/3)} := \begin{bmatrix}
 									0 & 1 & 1 & 0 & 0 & 0 \\
 									0 & 0 & 0 & 1 & 1 & 0 \\
@@ -283,22 +296,22 @@
 			   						0 & 0 & 1 & 1
 			   					\end{bmatrix}
 			\]
-		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje przekrój Poincare $N \subset P$ taki że odpowiednie odwzorowanie Poincare $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod_k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmienniczym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
+		Wtedy dla wszystkich wartości parametrów w dostatecznie małym otoczeniu $(\sigma, r, b)$ istnieje sekcja Poincarégo $N \subset P$ taka, że odpowiednie odwzorowanie Poincarégo $f$ spełnia warunek Lipschitza i jest dobrze określone. Ponadto, istnieje ciągłe odwzorowanie $\rho : Inv(N, f) \to \prod_k$, gdzie $Inv(N, f)$ jest największym zbiorem niezmienniczym w $N$ odnośnie $f$, z taką własnością że $\sum (A_{(\sigma, r, b)}) \subset \rho (Inv(N, f))$ oraz
 			\[ \rho \circ f = T \circ \rho \]
-		Co więcej, dla każdego periodycznego $\alpha \in \sum (A)$ istnieje takie $x \in Inv(N, f)$ które leży na trajektorii periodycznej z takim samym minimalnym periodem $\rho(x) = \alpha$.
+		Co więcej, dla każdego okresowego $\alpha \in \sum (A)$ istnieje $x \in Inv(N, f)$, które leży na trajektorii okresowej z takim samym minimalnym okresem, takie że $\rho(x) = \alpha$.
 	\end{theorem}
-	\par Uproszczając można powiedzieć że oba te twierdzenia dowodzą tak naprawdę, że w atraktorze Lorenza (przy wybranych parametrach) istnieją punkty które są tak chaotyczne jak pewien ciąg symboli, dwóch w pierwszym twierdzeniu oraz 6 (dla $(10, 28, 8/3)$) lub 4 (dla $(10, 60, 8/3)$ i $(10, 54, 45)$) z odpowiednimi macierzami przejścia w drugim. Pierwsze twierdzenie jest jeszcze na tyle ważne że wniosło znaczący wkład w dziedzinę komputerowo wspieranych dowodów.
+	\par Uproszczając można powiedzieć że oba te twierdzenia dowodzą tak naprawdę, że w atraktorze Lorenza (przy wybranych parametrach) istnieją punkty które są tak chaotyczne jak pewien ciąg symboli, dwóch w pierwszym twierdzeniu oraz 6 (dla $(10, 28, 8/3)$) lub 4 (dla $(10, 60, 8/3)$ i $(10, 54, 45)$) z odpowiednimi macierzami przejścia w drugim. Twierdzenie 5 zasługuje na uwagę gdyż wniosło znaczący wkład w dziedzinę komputerowo wspieranych dowodów.
 
 \chapter{Program dla wizualizacji atraktora Lorenza}
 	\par Dla demonstracji powyżej opisanych własności układu Lorenza napisano program dla wizualizacji atraktora Lorenza.
 	
 	\section{Technologie}
-	\par W celu uproszczenia korzystania z programu zaimplementowano go w formie strony internetowej, ponieważ przy takim podejściu  jest on wieloplatformowy i nie wymaga od użytkownika żadnych dodatkowych działań (takich jak pobieranie bibliotek, środowisk itd.), wystarczy posiadanie przeglądarki.
+	\par W celu uproszczenia korzystania z programu zaimplementowano go w formie strony internetowej, ponieważ przy takim podejściu  jest on wieloplatformowy i nie wymaga od użytkownika żadnych dodatkowych działań (takich jak pobieranie bibliotek, środowisk itd.), wystarczalne posiadanie przeglądarki.
 	
 	\par Program składa się z trzech plików: \hyperref[sec:html]{index.html}, \hyperref[sec:css]{style.css} oraz \hyperref[sec:js]{lorenz-system.js}. Piersze dwa odpowiadają za wygląd strony, w trzecim znajduje się cała logika aplikacji. Dla rozwiązania układu Lorenza wykorzystano bibliotekę "Numeric Javascript" \cite{NumJS}, która dostarcza narzędzia dla rozwiązania równań różniczkowych zwyczajnych metodą numeryczną DOPRI (Dormand-Prince). Z otrzymanych wyników zostaje potem narysowany trójwymiarowy wykres za pomocą biblioteki "plotly.js" \cite{Plotly}.
 	
 	\section{Instrukcja}
-	\par Po lewej stronie znajduję się panel konfiguracyjny, który posiada pola dla zmiany wartości parametrów $\sigma, r, b$, czasu początku i końca oraz punktu startowego rozwiązania. Poniżej znajdują się następujące przyciski:
+	\par Po lewej stronie znajduję się panel konfiguracyjny, który posiada pola dla zmiany wartości parametrów $\sigma, r, b$, czasu początkowego i końcowego oraz punktu startowego rozwiązania. Poniżej znajdują się następujące przyciski:
 	\begin{itemize}
 		\item "NEW PLOT" - po kliknięciu rysuje wykres rozwiązania odpowiadającego obecnie wpisanym wartościom parametrów; jeśli jakieś wykresy już są narysowane, to zostają usunięte
 		\item "ADD PLOT" - po kliknięciu dodaje wykres rozwiązania odpowiadającego obecnym wartościom parametrów do narysowanych wcześniej wykresów
